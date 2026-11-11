@@ -1,4 +1,4 @@
-name: JoshHackQualityChecks
+name: CoffeeMaker Quality Checks
 
 on:
   push:
@@ -24,7 +24,6 @@ jobs:
       - name: Run JUnit regression tests
         run: ./mvnw test
 
-        
       - name: Run PIT mutation testing
         run: ./mvnw test-compile org.pitest:pitest-maven:mutationCoverage
 
@@ -34,5 +33,4 @@ jobs:
         with:
           name: pit-report
           path: target/pit-reports/
-
 
