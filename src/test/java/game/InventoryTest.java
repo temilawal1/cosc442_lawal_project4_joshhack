@@ -24,7 +24,7 @@ public class InventoryTest {
         item3 = new Item(']', Color.blue, "Blue", "Bright");
         item4 = new Item(',', Color.yellow, "Yellow", "Weird");
     }
-    //
+    
     @Test 
     public void testGetItems() {
         inventory.add(item1);
