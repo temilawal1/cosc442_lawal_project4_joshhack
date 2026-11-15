@@ -5,7 +5,7 @@ public class CombatRules {
     public static int calculateNewHp(int currentHp, int maxHp, int amount) {
         int newHp = currentHp + amount;
 
-        if (newHp > maxHp)
+        if (newHp < maxHp) // fault introduced
             return maxHp;
 
         return newHp;
