@@ -2,6 +2,8 @@ package game;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -47,6 +49,9 @@ public class CreatureTest {
     public void modifyHpCreatureIsDeadTest() {
         creature.modifyHp(-100, "died to a fall");
         assertEquals(0, creature.hp());
+
+        assertNull(world.creature(0, 0,0));
+        assertNotNull(world.item(0, 0, 0));
 
     }
 }
