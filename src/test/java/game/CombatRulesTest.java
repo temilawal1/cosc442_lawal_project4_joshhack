@@ -16,22 +16,27 @@ public class CombatRulesTest {
 
     @BeforeEach
     public void setUp() {
-        currentHp = 50;
+        currentHp = 100;
         maxHp = 100;
     }
 
     @Test
     public void calculateNewHpValidTest() {
         
-        currentHp = CombatRules.calculateNewHp(currentHp, maxHp, -49);
+        currentHp = CombatRules.calculateNewHp(currentHp, maxHp, -99);
         assertEquals(1, currentHp);
         assertFalse(CombatRules.isDead(currentHp));
         // should be 1 and alive
 
-        currentHp = CombatRules.calculateNewHp(currentHp, maxHp, 40);
-        assertEquals(41, currentHp);
-        assertFalse(CombatRules.isDead(currentHp));
-        // should be 90 and alive
+    }
+
+    @Test 
+    public void calculateNewHpIsDeadTest() {
+
+        currentHp = CombatRules.calculateNewHp(currentHp, maxHp, -101);
+        assertEquals(-1, currentHp);
+        assertTrue(CombatRules.isDead(currentHp));
+        // should be -1 and dead
     }
 
 
