@@ -40,11 +40,11 @@ jobs:
           sarif_file: target/spotbugs.sarif
           category: spotbugs
 
-  #    - name: Upload PIT report
-  #      if // no space : always()
-  #      uses: actions/upload-artifact@v4
-  #      with:
-  #        name: pit-report
-  #        path: target/pit-reports/
+      - name: Upload PIT report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pit-report
+          path: target/pit-reports/
 
 
