@@ -9,6 +9,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
 
     steps:
       - name: Check out repository
@@ -27,10 +30,21 @@ jobs:
       - name: Run PIT mutation testing
         run: ./mvnw test-compile org.pitest:pitest-maven:mutationCoverage
 
-      - name: Upload PIT report
+      - name: Run SpotBugs
+        run: ./mvnw -B compile spotbugs:spotbugs
+
+      - name: Upload SpotBugs SARIF
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: github/codeql-action/upload-sarif@v3
         with:
-          name: pit-report
-          path: target/pit-reports/
+          sarif_file: target/spotbugs.sarif
+          category: spotbugs
+
+  #    - name: Upload PIT report
+  #      if // no space : always()
+  #      uses: actions/upload-artifact@v4
+  #      with:
+  #        name: pit-report
+  #        path: target/pit-reports/
+
 

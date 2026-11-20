@@ -35,7 +35,7 @@ public class CombatRulesTest {
 
         currentHp = CombatRules.calculateNewHp(currentHp, maxHp, -101);
         assertEquals(-1, currentHp);
-        assertFalse(CombatRules.isDead(currentHp)); // introduced change in expected behavior
+        assertTrue(CombatRules.isDead(currentHp));
         // should be -1 and dead
     }
 
