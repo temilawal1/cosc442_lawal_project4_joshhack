@@ -22,16 +22,22 @@ public class CreatureTest {
 
     @BeforeEach
     public void setUp() {
-        Tile[][][] tiles = new Tile[1][1][1];
-        tiles[0][0][0] = Tile.FLOOR;
+        Tile[][][] tiles = new Tile[3][3][1];
+        for (int x = 0; x < tiles.length; x++) {
+            for (int y = 0; y < tiles[x].length; y++) {
+                tiles[x][y][0] = Tile.FLOOR;
+            }
+        }
 
         world = new World(tiles);
 
         creature = new Creature(world, '@', Color.WHITE, "creature", 100, 5, 0);
 
-        creature.x = 0;
-        creature.y = 0;
+        creature.x = 1;
+        creature.y = 1;
         creature.z = 0;
+        world.add(creature);
+        new CreatureAi(creature);
     }
 
     @Test
@@ -42,16 +48,36 @@ public class CreatureTest {
 
         creature.modifyHp(-99, "almost died to a fall");
         assertEquals(1, creature.hp());
-        
+        assertEquals(creature, world.creature(1, 1, 0));
+        assertNull(world.item(1, 1, 0));
     }
 
     @Test
     public void modifyHpCreatureIsDeadTest() {
+        Item carriedItem = new Item('!', Color.RED, "potion", null);
+        creature.inventory().add(carriedItem);
+
+        assertEquals(creature, world.creature(1, 1, 0));
+
         creature.modifyHp(-100, "died to a fall");
         assertEquals(0, creature.hp());
+        assertEquals("died to a fall", creature.causeOfDeath());
+        assertNull(world.creature(1, 1, 0));
 
-        assertNull(world.creature(0, 0,0));
-        assertNotNull(world.item(0, 0, 0));
+        Item corpse = world.item(1, 1, 0);
+        assertNotNull(corpse);
+        assertEquals("creature corpse", corpse.name());
+        assertEquals(500, corpse.foodValue());
+        assertFalse(creature.inventory().contains(carriedItem));
 
+        boolean carriedItemDropped = false;
+        for (int x = 0; x < world.width(); x++) {
+            for (int y = 0; y < world.height(); y++) {
+                if (world.item(x, y, 0) == carriedItem) {
+                    carriedItemDropped = true;
+                }
+            }
+        }
+        assertTrue(carriedItemDropped);
     }
 }
