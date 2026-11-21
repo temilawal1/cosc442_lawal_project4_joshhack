@@ -80,4 +80,32 @@ public class CreatureTest {
         }
         assertTrue(carriedItemDropped);
     }
+
+    @Test
+    public void meleeAttackDoesNotDamageWhenAttackEqualsDefenseTest() {
+        Creature defender = new Creature(world, 'd', Color.RED, "defender", 100, 5, 5);
+        defender.x = 2;
+        defender.y = 1;
+        defender.z = 0;
+        world.add(defender);
+        new CreatureAi(defender);
+
+        creature.meleeAttack(defender);
+
+        assertEquals(100, defender.hp());
+    }
+
+    @Test
+    public void meleeAttackDoesNotDamageWhenAttackIsBelowDefenseTest() {
+        Creature defender = new Creature(world, 'd', Color.RED, "defender", 100, 5, 6);
+        defender.x = 2;
+        defender.y = 1;
+        defender.z = 0;
+        world.add(defender);
+        new CreatureAi(defender);
+
+        creature.meleeAttack(defender);
+
+        assertEquals(100, defender.hp());
+    }
 }
